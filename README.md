@@ -269,6 +269,14 @@ These are all my settings in settings.json:
     "ui.completion.usePlaceholders": true,
     "verboseOutput": true
   },
+  "files.associations": {
+    "*.tmpl": "html",
+    "*.tpl": "html"
+  },
+  "emmet.includeLanguages": {
+    "html": "html",
+    "gohtml": "html"
+  },
   "files.autoSave": "afterDelay",
   "vs-kubernetes": {
     "vscode-kubernetes.helm-path-linux": "/home/koniukhov/.local/state/vs-kubernetes/tools/helm/linux-amd64/helm",
@@ -299,13 +307,14 @@ These are all my settings in settings.json:
     "typescript": "ts-node",
     "coffeescript": "coffee",
     "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
-    "pascal": "cd $dir && fpc $fileName and $dir$fileNameWithoutExt",
+    "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
     "sass": "sass --style expanded",
     "scss": "scss --style expanded",
-    "less": "cd $dir and lessc $fileName $fileNameWithoutExt.css"
+    "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css"
   },
   "code-runner.fileDirectoryAsCwd": true,
   "code-runner.saveAllFilesBeforeRun": true,
   "eslint.trace.server": "off"
 }
+
 ```
