@@ -114,12 +114,28 @@ Create a 'run_go.sh' file in a global directory, for example, '/usr/local/bin'
 #!/bin/bash
 
 # Function to run Go files, excluding _test.go files
+r#!/bin/bash
+
+# Function to build and run Go files, excluding _test.go files
 run_go() {
+    project_root=$(git rev-parse --show-toplevel 2>/dev/null || echo "$PWD")
+    project_name=$(basename "$project_root") # Use the project root directory name as the project name
+    output_file="$project_root/$project_name"
+    
+    # Find Go files excluding _test.go files
     files=$(find . -name "*.go" ! -name "*_test.go")
     if [ -n "$files" ]; then
-        go run $files
+        # Build the project
+        go build -o "$output_file" $files
+        if [ $? -eq 0 ]; then
+            # Run the built executable from the project root
+            (cd "$project_root" && GO_ENV_FILE="$project_root/.env" "$output_file")
+        else
+            echo "Build failed"
+            exit 1
+        fi
     else
-        echo "No Go files found to run"
+        echo "No Go files found to build"
         exit 1
     fi
 }
@@ -128,11 +144,12 @@ run_go() {
 main_file=$(find . -name "main.go" | head -n 1)
 
 if [ -n "$main_file" ]; then
-    (cd $(dirname "$main_file") && run_go)
+    cd $(dirname "$main_file") && run_go
 else
     echo "main.go not found"
     exit 1
 fi
+
 ```
 Make the script executable:
 
